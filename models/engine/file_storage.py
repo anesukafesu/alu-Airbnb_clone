@@ -14,22 +14,33 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        # Converting the object to a dictionary
-        obj_dict = obj.to_dict()
-
         # Creating a key to store the object
-        key = "{}.{}".format(obj_dict['__class__'], obj_dict['id'])
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
 
         # Adding the object to our dictionary of objects
-        self.__objects[key] = obj_dict
+        self.__objects[key] = obj
 
     def save(self):
+        # Convert objects to dictionaries
+        object_dictionaries = {}
+        for key, value in self.__objects.items():
+            object_dictionaries[key] = value.to_dict()
+
+        # Writing the object dictionaries to file
         with open(self.__file_path, "w+") as f:
-            dump(self.__objects, f)
+            dump(object_dictionaries, f)
 
     def reload(self):
         try:
             with open(self.__file_path, "r") as f:
-                return load(f)
+
+                # Parse the objects from JSON
+                object_dictionaries = load(f)
+
+                # Convert them to BaseModels
+                for key, value in object_dictionaries.items():
+                    class_name = key.split(".")[0]
+                    self.__objects[key] = eval(class_name, **value)
+
         except FileNotFoundError:
             pass
