@@ -12,7 +12,7 @@ class BaseModel:
     """
 
     def __init__(self):
-        self.id = uuid4().hex
+        self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
     
@@ -30,7 +30,7 @@ class BaseModel:
 
     
     def to_dict(self):
-        attributes = self.__dict__
+        attributes = self.__dict__.copy()
         attributes['__class__'] = self.__class__.__name__
         attributes['created_at'] = attributes['created_at'].isoformat()
         attributes['updated_at'] = attributes['updated_at'].isoformat()
