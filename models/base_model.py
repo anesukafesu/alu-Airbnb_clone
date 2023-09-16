@@ -11,10 +11,24 @@ class BaseModel:
     Therefore serves as the Base class.
     """
 
-    def __init__(self):
-        self.id = uuid4().hex
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+
+        if kwargs is not None:
+            # Adding all kwargs as instance attributes
+            for key, value in kwargs.items():
+
+                # Converting iso format string dates to date objects
+                if key in ['created_at', 'updated_at']:
+                    value = datetime.fromisoformat(value)
+
+                # Adding all attributes except __class__
+                if key != "__class__":
+                    setattr(self, key, value)
+        else:
+            # Else we create new base attributes
+            self.id = uuid4().hex
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
     
 
     def __str__(self):
