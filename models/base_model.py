@@ -32,5 +32,5 @@ class BaseModel:
     def to_dict(self):
         attributes = self.__dict__
         attributes['__class__'] = self.__class__.__name__
-        attributes['created_at'] = attributes.created_at.isoformat()
-        attributes['updated_at'] = attributes.updated_at.isoformat()
+        attributes['created_at'] = attributes['created_at'].isoformat()
+        attributes['updated_at'] = attributes['updated_at'].isoformat()
