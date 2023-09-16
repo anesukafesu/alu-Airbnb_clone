@@ -13,7 +13,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
 
-        if kwargs is not None:
+        if kwargs:
             # Adding all kwargs as instance attributes
             for key, value in kwargs.items():
 
