@@ -40,7 +40,7 @@ class FileStorage:
                 # Convert them to BaseModels
                 for key, value in object_dictionaries.items():
                     class_name = key.split(".")[0]
-                    self.__objects[key] = eval(class_name, **value)
+                    self.__objects[key] = eval(class_name)(**value)
 
         except FileNotFoundError:
             pass
