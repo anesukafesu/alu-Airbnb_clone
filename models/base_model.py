@@ -30,21 +30,21 @@ class BaseModel:
             self.id = uuid4().hex
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-    
+
+            # Add the object to storage
+            storage.new(self.to_dict())
 
     def __str__(self):
         class_name = self.__class__.__name__
         instance_id = self.id
         attributes = self.__dict__
-        
+
         return "[{}] ({}) {}".format(class_name, instance_id, attributes)
-    
 
     def save(self):
         self.updated_at = datetime.now()
-        storage.save(self)
+        storage.save(self.to_dict())
 
-    
     def to_dict(self):
         attributes = self.__dict__.copy()
         attributes['__class__'] = self.__class__.__name__
