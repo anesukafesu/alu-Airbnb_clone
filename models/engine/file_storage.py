@@ -14,8 +14,14 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        key = "{}.{}".format(obj['__class__'], obj['id'])
-        self.__objects[key] = obj
+        # Converting the object to a dictionary
+        obj_dict = obj.to_dict()
+
+        # Creating a key to store the object
+        key = "{}.{}".format(obj_dict['__class__'], obj_dict['id'])
+
+        # Adding the object to our dictionary of objects
+        self.__objects[key] = obj_dict
 
     def save(self):
         with open(self.__file_path, "w+") as f:
