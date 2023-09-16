@@ -18,7 +18,7 @@ class FileStorage:
         self.__objects[key] = obj
 
     def save(self):
-        with open(self.__file_path, "w") as f:
+        with open(self.__file_path, "w+") as f:
             dump(f, self.__objects)
 
     def reload(self):
