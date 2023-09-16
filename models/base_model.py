@@ -22,8 +22,7 @@ class BaseModel:
         instance_id = self.id
         attributes = self.__dict__
         
-        repre = "[{}] ({}) {}".format(class_name, instance_id, attributes)
-        print(repre)
+        return "[{}] ({}) {}".format(class_name, instance_id, attributes)
     
 
     def save(self):
