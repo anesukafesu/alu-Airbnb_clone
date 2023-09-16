@@ -19,7 +19,7 @@ class FileStorage:
 
     def save(self):
         with open(self.__file_path, "w+") as f:
-            dump(f, self.__objects)
+            dump(self.__objects, f)
 
     def reload(self):
         try:
