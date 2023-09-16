@@ -3,6 +3,7 @@
 """
 from uuid import uuid4
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -41,6 +42,7 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
+        storage.save(self)
 
     
     def to_dict(self):
