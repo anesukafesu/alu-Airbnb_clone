@@ -1,22 +1,33 @@
 import unittest
 from datetime import datetime
-from models import BaseModel
+from your_module import BaseModel  # Replace 'your_module' with the actual module name
 
 class TestBaseModel(unittest.TestCase):
 
-    def test_init(self):
+    def test_init_defaults(self):
         model = BaseModel()
         self.assertIsNotNone(model.id)
         self.assertIsInstance(model.created_at, datetime)
         self.assertIsInstance(model.updated_at, datetime)
         self.assertEqual(model.created_at, model.updated_at)
 
+    def test_init_with_args(self):
+        model_data = {
+            "id": "12345",
+            "created_at": "2023-09-16T12:34:56",
+            "updated_at": "2023-09-16T12:45:00",
+            "custom_attribute": "custom_value"
+        }
+        model = BaseModel(**model_data)
+        self.assertEqual(model.id, model_data["id"])
+        self.assertIsInstance(model.created_at, datetime)
+        self.assertIsInstance(model.updated_at, datetime)
+        self.assertEqual(model.custom_attribute, "custom_value")
+
     def test_str(self):
         model = BaseModel()
-        expected_output = f"[BaseModel] ({model.id}) {model.__dict__}\n"
-        with unittest.mock.patch('sys.stdout', new_callable=unittest.mock.StringIO) as mock_stdout:
-            print(model)
-            self.assertEqual(mock_stdout.getvalue(), expected_output)
+        expected_output = f"[BaseModel] ({model.id}) {model.__dict__}"
+        self.assertEqual(str(model), expected_output)
 
     def test_save(self):
         model = BaseModel()
