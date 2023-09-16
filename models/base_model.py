@@ -12,7 +12,7 @@ class BaseModel:
     """
 
     def __init__(self):
-        self.id = str(uuid4())
+        self.id = uuid4().hex
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
     
@@ -34,3 +34,4 @@ class BaseModel:
         attributes['__class__'] = self.__class__.__name__
         attributes['created_at'] = attributes['created_at'].isoformat()
         attributes['updated_at'] = attributes['updated_at'].isoformat()
+        return attributes
