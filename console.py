@@ -15,7 +15,8 @@ from models import storage
 class HBNBCommand(Cmd):
     """Console-based interpreter for different commands"""
     prompt = "(hbnb) "
-    classes = ["BaseModel", "User"]
+    classes = ["BaseModel", "User", "Amenity",
+               "City", "Place", "Review", "State"]
 
     def __create_key(self, class_name, instance_id):
         """Helper function to construct key
