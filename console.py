@@ -9,7 +9,7 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
-from models import storage, classes
+from models import storage
 
 
 class HBNBCommand(Cmd):
@@ -72,6 +72,8 @@ class HBNBCommand(Cmd):
         Returns True if valid
         Returns False if invalid and prints the error message
         """
+        classes = ["Amenity", "BaseModel", "City",
+                   "Place", "Review", "State", "User"]
         if class_name not in classes:
             print("** class doesn't exist **")
             return False

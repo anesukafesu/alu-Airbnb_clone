@@ -40,13 +40,14 @@ class FileStorage:
     def reload(self):
         try:
             with open(self.__file_path, "r") as f:
+                self.__objects = {}
 
                 # Parse the dictionaries from JSON
                 object_dictionaries = load(f)
 
                 # Convert them to objects
                 for key, value in object_dictionaries.items():
-                    class_name = key.split(".")[0]
+                    class_name = value['__class__']
                     self.__objects[key] = eval(class_name)(**value)
 
         except FileNotFoundError:
