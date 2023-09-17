@@ -116,6 +116,7 @@ class HBNBCommand(Cmd):
         if self.__validate_class_name(line):
             bm = BaseModel()
             bm.save()
+            print(bm.id)
 
     def do_show(self, line):
         """Shows an instance
@@ -158,10 +159,9 @@ class HBNBCommand(Cmd):
     def do_all(self, line):
         args = self.__get_args(line)
         class_name = args[0] if len(args) == 1 else ""
-        models = self.__get_objects(class_name)
-
-        for model in models.values():
-            print(model)
+        models = self.__get_objects(class_name).values()
+        models_str = list(map(lambda m: str(m), models))
+        print(models_str)
 
     def do_update(self, line):
         """Updates an attribute on a specified instance
