@@ -44,8 +44,7 @@ class TestUser(unittest.TestCase):
         self.assertTrue(isinstance(updated_at, datetime))
 
     def test_str_representation(self):
-        user = User(email="example@example.com",
-                    password="password123", first_name="John", last_name="Doe")
+        user = User()
 
         # Check that the __str__ method returns the expected string representation
         expected_str = "[User] ({}) {}".format(user.id, user.__dict__)

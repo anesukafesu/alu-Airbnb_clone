@@ -41,10 +41,10 @@ class FileStorage:
         try:
             with open(self.__file_path, "r") as f:
 
-                # Parse the objects from JSON
+                # Parse the dictionaries from JSON
                 object_dictionaries = load(f)
 
-                # Convert them to BaseModels
+                # Convert them to objects
                 for key, value in object_dictionaries.items():
                     class_name = key.split(".")[0]
                     self.__objects[key] = eval(class_name)(**value)

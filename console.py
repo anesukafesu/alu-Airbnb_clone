@@ -9,14 +9,12 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
-from models import storage
+from models import storage, classes
 
 
 class HBNBCommand(Cmd):
     """Console-based interpreter for different commands"""
     prompt = "(hbnb) "
-    classes = ["BaseModel", "User", "Amenity",
-               "City", "Place", "Review", "State"]
 
     def __create_key(self, class_name, instance_id):
         """Helper function to construct key
@@ -74,7 +72,7 @@ class HBNBCommand(Cmd):
         Returns True if valid
         Returns False if invalid and prints the error message
         """
-        if class_name not in self.classes:
+        if class_name not in classes:
             print("** class doesn't exist **")
             return False
         else:
