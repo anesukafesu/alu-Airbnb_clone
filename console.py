@@ -3,13 +3,14 @@
 """
 from cmd import Cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
 class HBNBCommand(Cmd):
     """Console-based interpreter for different commands"""
     prompt = "(hbnb) "
-    classes = ["BaseModel"]
+    classes = ["BaseModel", "User"]
 
     def __create_key(self, class_name, instance_id):
         """Helper function to construct key
@@ -120,7 +121,7 @@ class HBNBCommand(Cmd):
         if len(args) == 1:
             class_name = args[0]
             if self.__validate_class_name(class_name):
-                bm = BaseModel()
+                bm = eval(class_name)()
                 bm.save()
                 print(bm.id)
         else:
