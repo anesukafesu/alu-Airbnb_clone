@@ -90,7 +90,7 @@ class HBNBCommand(Cmd):
     def __get_objects(self, class_name):
         if class_name == "":
             # If no class name has been supplied we return everything
-            return storage.all()
+            return storage.all().values()
         else:
             # If a class name has been supplied we validate it
             if self.__validate_class_name(class_name):
@@ -106,7 +106,7 @@ class HBNBCommand(Cmd):
                     if value.__class__.__name__ == class_name:
                         filtered_objects[key] = value
 
-                return filtered_objects
+                return filtered_objects.values()
             else:
                 return None
 
@@ -172,9 +172,11 @@ class HBNBCommand(Cmd):
         # Parse class if provided
         class_name = args[0] if len(args) == 1 else ""
 
-        models = self.__get_objects(class_name).values()
-        # If a class name has not been provided
+        # Get models
+        models = self.__get_objects(class_name)
 
+        # Meaning either a valid class name was provided
+        # Or no class name was provided at all
         if models is not None:
             models_str = list(map(lambda m: str(m), models))
             print(models_str)
@@ -201,7 +203,7 @@ class HBNBCommand(Cmd):
 
                     # Get attribute data type from instance and cast value to that type
                     attr_type = type(getattr(instance, attr_name, ""))
-                    cast_attr_val = eval(attr_type)(attr_val)
+                    cast_attr_val = eval(attr_type.__name__)(attr_val)
 
                     # Set the attribute to cast value
                     setattr(instance, attr_name, cast_attr_val)
