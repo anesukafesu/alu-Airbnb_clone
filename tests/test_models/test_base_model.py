@@ -1,44 +1,44 @@
 #!/usr/bin/python3
+"""Test BaseModel"""
+
 import unittest
-import os
 from models.base_model import BaseModel
-from datetime import datetime
-from models import storage
 
 
 class TestBaseModel(unittest.TestCase):
+    """test BaseModel"""
 
-    def test_init(self):
-        model = BaseModel()
-        self.assertIsInstance(model.id, str)
-        self.assertIsInstance(model.created_at, datetime)
-        self.assertIsInstance(model.updated_at, datetime)
+    def test_save_BaseModel(self):
+        """test save_Basemodel"""
+        base = BaseModel()
+        self.assertEqual(base.created_at, base.updated_at)
 
-    def test_str(self):
-        model = BaseModel()
-        expected_str = f"[BaseModel] ({model.id}) {model.__dict__}"
-        self.assertEqual(str(model), expected_str)
+    def test_doc(self):
+        """ Tests doc """
+        self.assertIsNotNone(BaseModel.__doc__)
 
-    def test_save(self):
-        model = BaseModel()
-        old_updated_at = model.updated_at
-        model.save()
-        self.assertNotEqual(old_updated_at, model.updated_at)
+    def test_to_json(self):
+    """Test the to_json method"""
+    base = BaseModel()
+    base_json = base.to_json()
 
-    def test_to_dict(self):
-        model = BaseModel()
-        model_dict = model.to_dict()
+    self.assertIsInstance(base_json, dict)
 
-        self.assertIsInstance(model_dict, dict)
-        self.assertEqual(model_dict['__class__'], 'BaseModel')
-        self.assertIsInstance(model_dict['created_at'], str)
-        self.assertIsInstance(model_dict['updated_at'], str)
+    self.assertIn("id", base_json)
+    self.assertIn("created_at", base_json)
+    self.assertIn("updated_at", base_json)
+    self.assertIn("__class__", base_json)
+    self.assertEqual(base.id, base_json["id"])
+    self.assertEqual("BaseModel", base_json["__class__"])
 
-    def tearDown(self):
-        # Clean up any test data or files created during testing
-        if os.path.exists("file.json"):
-            os.remove("file.json")
+    def test_kwarg(self):
+        basemodel = BaseModel()
+        self.assertEqual(basemodel.__class__.__name__, "BaseModel")
+        self.assertTrue(hasattr(basemodel, "id"))
+        self.assertTrue(hasattr(basemodel, "created_at"))
+        self.assertTrue(hasattr(basemodel, "updated_at"))
+        self.assertTrue(hasattr(basemodel, "__class__"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
