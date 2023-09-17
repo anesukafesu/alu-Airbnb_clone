@@ -107,16 +107,24 @@ class HBNBCommand(Cmd):
                         filtered_objects[key] = value
 
                 return filtered_objects
+            else:
+                return {}
 
     def do_create(self, line):
         """Creates an instance
         args: class_name
         e.g.: create City
         """
-        if self.__validate_class_name(line):
-            bm = BaseModel()
-            bm.save()
-            print(bm.id)
+        args = self.__get_args(line)
+
+        if len(args) == 1:
+            class_name = args[0]
+            if self.__validate_class_name(class_name):
+                bm = BaseModel()
+                bm.save()
+                print(bm.id)
+        else:
+            print("** class name missing **")
 
     def do_show(self, line):
         """Shows an instance
@@ -151,6 +159,7 @@ class HBNBCommand(Cmd):
                 if self.__validate_instance_id(class_name, instance_id):
                     key = self.__create_key(class_name, instance_id)
                     del storage.all()[key]
+                    storage.save()
         elif len(args) == 1:
             print('** instance id missing **')
         else:
@@ -184,7 +193,7 @@ class HBNBCommand(Cmd):
                     instance = storage.all().get(key)
 
                     # Get attribute data type from instance and cast value to that type
-                    attr_type = type(instance[attr_name])
+                    attr_type = type(getattr(instance, attr_name))
                     cast_attr_val = eval(attr_type)(attr_val)
 
                     # Set the attribute to cast value
