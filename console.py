@@ -57,7 +57,8 @@ class HBNBCommand(Cmd):
                         args.append(curr_arg)
                         curr_arg = ""
             else:
-                # It's a normal character, which we simply add to the current string
+                # It's a normal character,
+                # which we simply add to the current string
                 curr_arg += char
 
         # If curr_arg still has text
@@ -208,7 +209,8 @@ class HBNBCommand(Cmd):
                     key = self.__create_key(class_name, instance_id)
                     instance = storage.all().get(key)
 
-                    # Get attribute data type from instance and cast value to that type
+                    # Get attribute data type from instance
+                    # then cast value to that type
                     attr_type = type(getattr(instance, attr_name, ""))
                     cast_attr_val = eval(attr_type.__name__)(attr_val)
 
