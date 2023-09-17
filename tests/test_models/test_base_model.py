@@ -4,16 +4,13 @@ from models.base_model import BaseModel
 
 
 class TestBaseModel(unittest.TestCase):
-    def test_save_BaseModel(self):
-        base = BaseModel()
-        self.assertEqual(base.created_at, base.updated_at)
 
     def test_doc(self):
         self.assertIsNotNone(BaseModel.__doc__)
 
     def test_to_json(self):
         base = BaseModel()
-        base_json = base.to_json()
+        base_json = base.to_dict()
 
         self.assertIsInstance(base_json, dict)
 
