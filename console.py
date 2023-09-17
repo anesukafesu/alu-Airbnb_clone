@@ -108,7 +108,7 @@ class HBNBCommand(Cmd):
 
                 return filtered_objects
             else:
-                return {}
+                return None
 
     def do_create(self, line):
         """Creates an instance
@@ -166,11 +166,18 @@ class HBNBCommand(Cmd):
             print('** class name missing **')
 
     def do_all(self, line):
+        # Parse args from line entered
         args = self.__get_args(line)
+
+        # Parse class if provided
         class_name = args[0] if len(args) == 1 else ""
+
         models = self.__get_objects(class_name).values()
-        models_str = list(map(lambda m: str(m), models))
-        print(models_str)
+        # If a class name has not been provided
+
+        if models is not None:
+            models_str = list(map(lambda m: str(m), models))
+            print(models_str)
 
     def do_update(self, line):
         """Updates an attribute on a specified instance
@@ -193,7 +200,7 @@ class HBNBCommand(Cmd):
                     instance = storage.all().get(key)
 
                     # Get attribute data type from instance and cast value to that type
-                    attr_type = type(getattr(instance, attr_name))
+                    attr_type = type(getattr(instance, attr_name, ""))
                     cast_attr_val = eval(attr_type)(attr_val)
 
                     # Set the attribute to cast value
