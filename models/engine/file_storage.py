@@ -2,6 +2,7 @@
 """Module for FileStorage Engine
 """
 from json import dump, load
+from models.base_model import BaseModel
 
 
 class FileStorage:
